@@ -23,12 +23,18 @@ spec:
     - name: graphite-plain
       port: 2003
       protocol: TCP
+      {{- if and (.Values.service.nodePorts.graphitePlain) (eq .Values.service.type "NodePort") }}
+      nodePort: {{ .Values.service.nodePorts.graphitePlain }}
+      {{- end }}
     - name: graphite-udp
       port: 2003
       protocol: UDP
     - name: graphite-gui
       port: {{ .Values.service.port }}
       protocol: TCP
+      {{- if and (.Values.service.nodePorts.graphiteGui) (eq .Values.service.type "NodePort") }}
+      nodePort: {{ .Values.service.nodePorts.graphiteGui }}
+      {{- end }}
     - name: aggregate-plain
       port: 2023
       protocol: TCP
